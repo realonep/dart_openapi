@@ -1,0 +1,25 @@
+{
+  "corp_code": "00126380",
+  "items": [
+    {
+      "year": 2021,
+      "type": "결산",
+      "cash_dividend_per_share": 1000,
+      "stock_dividend_rate": 0.0,
+      "payout_ratio": 25.0,
+      "record_date": "20211231",
+      "payment_date": "20220331"
+    },
+    {
+      "year": 2022,
+      "type": "결산",
+      "cash_dividend_per_share": 1100,
+      "stock_dividend_rate": 0.0,
+      "payout_ratio": 27.0,
+      "record_date": "20221231",
+      "payment_date": "20230331"
+    }
+  ],
+  "last_updated_at": "2026-01-01"
+}
+

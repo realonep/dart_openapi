@@ -1,0 +1,15 @@
+{
+  "name": "open-dart-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open DART API를 활용한 상장사 재무/배당 데이터 GitHub Pages 대시보드",
+  "scripts": {
+    "fetch:corp-index": "node scripts/fetch-corp-index.js",
+    "fetch:overview": "node scripts/fetch-corp-overview.js",
+    "fetch:financials": "node scripts/fetch-financials.js",
+    "fetch:dividends": "node scripts/fetch-dividends.js",
+    "fetch:all": "npm run fetch:corp-index && npm run fetch:overview && npm run fetch:financials && npm run fetch:dividends"
+  },
+  "devDependencies": {}
+}
+

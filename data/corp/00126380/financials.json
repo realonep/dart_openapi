@@ -1,0 +1,33 @@
+{
+  "corp_code": "00126380",
+  "items": [
+    {
+      "year": 2022,
+      "quarter": null,
+      "revenue": 100000000000,
+      "op_income": 8000000000,
+      "net_income": 6000000000,
+      "equity": 50000000000,
+      "total_assets": 120000000000,
+      "debt": 70000000000,
+      "roe": 12.0,
+      "roa": 5.0,
+      "debt_ratio": 140.0
+    },
+    {
+      "year": 2023,
+      "quarter": null,
+      "revenue": 120000000000,
+      "op_income": 9000000000,
+      "net_income": 7000000000,
+      "equity": 55000000000,
+      "total_assets": 130000000000,
+      "debt": 75000000000,
+      "roe": 13.5,
+      "roa": 5.4,
+      "debt_ratio": 136.0
+    }
+  ],
+  "last_updated_at": "2026-01-01"
+}
+

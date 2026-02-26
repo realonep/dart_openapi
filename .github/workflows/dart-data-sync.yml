@@ -1,0 +1,58 @@
+name: Open DART Data Sync
+
+on:
+  schedule:
+    - cron: '0 16 * * *' # 매일 KST 01:00 (UTC 16:00)
+  workflow_dispatch: {}
+
+jobs:
+  sync-data:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch corp index (optional placeholder)
+        run: node scripts/fetch-corp-index.js
+        env:
+          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+
+      - name: Fetch company overview
+        run: node scripts/fetch-corp-overview.js
+        env:
+          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+
+      - name: Fetch financials
+        run: node scripts/fetch-financials.js
+        env:
+          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+
+      - name: Fetch dividends
+        run: node scripts/fetch-dividends.js
+        env:
+          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore: sync Open DART data"
+            git push
+          fi
+

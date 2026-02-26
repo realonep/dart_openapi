@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open DART 재무 대시보드</title>
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/theme.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <div class="app-header__title">
+          <h1>Open DART 재무 대시보드</h1>
+          <p>기업 개황 · 주요 재무 지표 · 배당 현황 통합 뷰</p>
+        </div>
+        <div class="app-header__meta">
+          <span id="data-updated-at">데이터 기준일: -</span>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <section class="search-section">
+          <div id="search-bar-root"></div>
+        </section>
+
+        <section class="dashboard-section">
+          <div id="dashboard-root"></div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <small>
+          데이터 출처: 금융감독원 Open DART · 본 서비스는 투자 참고용이며, 최종 투자 판단과 책임은 이용자에게 있습니다.
+        </small>
+      </footer>
+    </div>
+
+    <script src="./assets/js/utils/formatters.js"></script>
+    <script src="./assets/js/utils/dom.js"></script>
+    <script src="./assets/js/utils/router.js"></script>
+    <script src="./assets/js/api/dataLoader.js"></script>
+    <script src="./assets/js/api/stateManager.js"></script>
+    <script src="./assets/js/components/common/card.js"></script>
+    <script src="./assets/js/components/common/table.js"></script>
+    <script src="./assets/js/components/common/chart.js"></script>
+    <script src="./assets/js/components/searchBar.js"></script>
+    <script src="./assets/js/components/companyOverview.js"></script>
+    <script src="./assets/js/components/financialCharts.js"></script>
+    <script src="./assets/js/components/dividendCharts.js"></script>
+    <script src="./assets/js/components/dashboardLayout.js"></script>
+    <script src="./assets/js/api/stateManager.js"></script>
+    <script src="./assets/js/main.js"></script>
+  </body>
+</html>
+

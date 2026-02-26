@@ -1,0 +1,14 @@
+{
+  "corp_code": "00126380",
+  "corp_name": "샘플기업",
+  "stock_code": "000000",
+  "market": "KOSPI",
+  "induty": "전자",
+  "ceo_nm": "홍길동",
+  "est_dt": "19900101",
+  "list_dt": "20000101",
+  "hm_url": "https://example.com",
+  "summary": "이 영역에는 Open DART에서 가져온 기업 개황 정보 요약이 표시됩니다.",
+  "last_updated_at": "2026-01-01"
+}
+
