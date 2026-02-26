@@ -1,6 +1,8 @@
 name: Open DART Data Sync
 
 on:
+  push:
+    branches: [ "master" ]  # 이 두 줄을 추가하여 master에 파일이 올라가면 실행되게 함
   schedule:
     - cron: '0 16 * * *' # 매일 KST 01:00 (UTC 16:00)
   workflow_dispatch: {}
