@@ -139,7 +139,7 @@ git push -u origin <브랜치명>
 
 권장값:
 
-- `ENABLE_FETCH_ALL_SYNC=true` (실행 시)
+- `ENABLE_FETCH_ALL_SYNC=false` (기본값, 실행은 `run_sync=true`로 수동 트리거 권장)
 - `DATA_BACKEND=db`
 - `DB_ONLY=1`
 - `SYNC_CORP_CONCURRENCY=2`
