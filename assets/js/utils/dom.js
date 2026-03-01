@@ -21,6 +21,12 @@ window.DartDOM = (function () {
   }
 
   function clear(node) {
+    // LightweightCharts ResizeObserver / WebGL 컨텍스트 정리
+    node.querySelectorAll('*').forEach((child) => {
+      if (typeof child.__lwCleanup === 'function') {
+        try { child.__lwCleanup(); } catch (_) {}
+      }
+    });
     while (node.firstChild) {
       node.removeChild(node.firstChild);
     }

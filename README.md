@@ -47,13 +47,12 @@ Open DART API를 활용하여 **상장사의 기업 개황 · 주요 재무 지�
 - 워크플로우 파일: `.github/workflows/dart-data-sync.yml`
 - 트리거:
   - 수동 실행만 지원 (`workflow_dispatch`)
-- 목적:
-  - 온디맨드 운영에 필요한 초기 검색 목록(`corp-code-list.json`) 갱신
-- 입력값:
-  - `write_corp_master` (기본 `false`): `true`일 때 `corp_master` DB 적재 시도(실패해도 목록 JSON은 유지)
+- 실행 모드:
+  - 기본 안전모드(`run_sync=false`): 수집 단계 skip
+  - 실동기화(`run_sync=true`): `fetch:all` → `db:migrate` → `db:sync-remote`
 - 특징:
-  - `fetch:all`/`db:migrate`/`db:sync-remote` 같은 배치 동기화는 이 워크플로우에서 실행하지 않음
   - 레거시 자동 스케줄/푸시 기반 전체 갱신은 제거됨
+  - `data` 자동 커밋/푸시는 수행하지 않음
 
 ## 로컬에서 실행 (실행 방법)
 
@@ -187,5 +186,5 @@ npm run db:refresh-partial-market
 
 **실행 순서 권장(배치 수집)**: 최초 1회 `npm run db:seed-targets`(companies-config → sync_targets) → 수집(`npm run fetch:all`) → (선택) `WRITE_TO_DB=1` 포함 시 자동 DB 적재 → (선택) `npm run db:migrate` 수동 적재 → (Turso 사용 시) `npm run db:sync-remote`.
 
-CI에서 온디맨드 초기화를 실행하려면 `workflow_dispatch`를 실행하고, 최소 Secrets(`OPENDART_API_KEY`)를 등록해야 합니다.
+CI에서 실동기화를 실행하려면 `workflow_dispatch` 실행 시 `run_sync=true`로 설정하고, Secrets(`OPENDART_API_KEY`, `DATABASE_URL`, `DATABASE_AUTH_TOKEN`)를 등록해야 합니다.
 

@@ -19,19 +19,23 @@ body {
 }
 
 .app-header__title h1 {
-  font-size: clamp(22px, 3vw, 30px);
-  font-weight: 700;
+  font-size: clamp(30px, 4.2vw, 52px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
 }
 
 .app-header__title p {
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--color-text-muted);
 }
 
 .app-header__meta {
-  font-size: 12px;
-  color: var(--color-text-muted);
+  font-size: 11px;
+  color: #555555;
+  border: 1px solid #eeeeee;
+  padding: 5px 8px;
+  border-radius: 999px;
 }
 
 .app-main {
@@ -53,11 +57,35 @@ body {
   gap: 16px;
 }
 
+.market-sync-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.market-sync-status__bar {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, #d8d8d8 0%, #8c8c8c 50%, #d8d8d8 100%);
+  background-size: 200% 100%;
+  animation: marketSyncPulse 1.2s linear infinite;
+}
+
+.market-sync-status__text {
+  font-size: 11px;
+  color: #8a8a8a;
+}
+
+@keyframes marketSyncPulse {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
 .app-footer {
   margin-top: 16px;
   font-size: 11px;
   color: var(--color-text-muted);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid #eeeeee;
   padding-top: 10px;
 }
 
@@ -68,9 +96,9 @@ body {
   gap: 10px;
   padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(8, 10, 26, 0.96);
+  background: #ffffff;
   border: 1px solid var(--color-border-subtle);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: none;
 }
 
 .search-bar__input {
@@ -78,7 +106,7 @@ body {
   border: none;
   outline: none;
   background: transparent;
-  color: var(--color-text);
+  color: #000000;
   font-size: 14px;
 }
 
@@ -91,10 +119,141 @@ body {
   color: var(--color-text-muted);
 }
 
+.search-bar__mode {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.search-bar__mode-btn {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-subtle);
+  background: #fff;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.search-bar__mode-btn.is-active {
+  background: var(--color-bg-accent, #1a1a1a);
+  color: #fff;
+  border-color: transparent;
+}
+
+.search-results__add-btn {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-subtle);
+  background: #fff;
+  cursor: pointer;
+}
+
+.search-results__add-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+.search-results__add-btn.is-added {
+  border-color: #2e7d32;
+  color: #2e7d32;
+  cursor: default;
+}
+
+.search-results__hint {
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.search-results__empty-hint {
+  cursor: default;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  padding: 12px;
+}
+
+.dashboard-notice {
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-notice p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* 재수집 버튼 */
+.corp-refetch-btn {
+  display: block;
+  margin: 0 0 10px auto;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.corp-refetch-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.corp-refetch-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* 수집 대기 중 프로그레스 바 */
+.collecting-bar {
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #e0e0e0 0%, #555 50%, #e0e0e0 100%);
+  background-size: 200% 100%;
+  animation: marketSyncPulse 1.4s linear infinite;
+  border-radius: 2px;
+}
+
+/* Toast 알림 */
+.dart-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 9999;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.dart-toast--success {
+  background: #1a1a1a;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+.dart-toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 .search-results {
   margin-top: 8px;
-  background: rgba(8, 10, 26, 0.96);
-  border-radius: 14px;
+  background: #ffffff;
+  border-radius: 0;
   border: 1px solid var(--color-border-subtle);
   max-height: 260px;
   overflow-y: auto;
@@ -111,8 +270,8 @@ body {
 }
 
 .search-results__item:hover {
-  background: rgba(79, 139, 255, 0.06);
-  transform: translateY(-1px);
+  background: #f8f8f8;
+  transform: none;
 }
 
 .search-results__name {
@@ -145,24 +304,30 @@ body {
 .dashboard-tab {
   padding: 6px 12px;
   border-radius: 999px;
-  border: 1px solid transparent;
-  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #000000;
+  background: #ffffff;
   font-size: 12px;
-  color: var(--color-text-muted);
+  color: #000000;
   cursor: pointer;
-  transition: background 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+  transition: background 0.1s ease, color 0.1s ease;
 }
 
 .dashboard-tab--active {
-  border-color: rgba(79, 139, 255, 0.6);
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
+  border-color: #000000;
+  background: #000000;
+  color: #ffffff;
 }
 
 .dashboard-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 2fr);
   gap: 16px;
+}
+
+.dashboard-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 @media (max-width: 960px) {
@@ -173,7 +338,7 @@ body {
 
 .empty-state {
   padding: 28px 22px;
-  text-align: center;
+  text-align: left;
 }
 
 .empty-state h2 {
@@ -184,5 +349,1113 @@ body {
 .empty-state p {
   font-size: 12px;
   color: var(--color-text-muted);
+}
+
+/* 최신 지표 카드 (guidance 수치) */
+.latest-indicators-list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.latest-indicators-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13px;
+}
+.latest-indicators-row dt {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+.latest-indicators-row dd {
+  margin: 0;
+  font-weight: 800;
+  color: var(--color-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+}
+
+/* 카드 공통: 테두리/그림자 최소화, 얇은 구분선만 */
+.card {
+  border: 0.5px solid #eeeeee;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.card__header {
+  padding: 18px 20px 10px;
+  border-bottom: 0.5px solid #eeeeee;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.card__subtitle {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #666666;
+}
+
+.card__body {
+  padding: 14px 16px;
+}
+
+/* 표: 헤더 배경 제거 + 구분선 최소화 */
+.dart-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+}
+
+.dart-table thead .dart-table__group-row th {
+  color: #666666;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 0.5px solid #eeeeee;
+  padding: 4px 2px;
+  font-size: 10px;
+}
+
+.dart-table thead th {
+  background: transparent;
+  color: #666666;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 0.5px solid #eeeeee;
+  padding: 5px 2px;
+  white-space: nowrap;
+}
+
+.dart-table tbody td {
+  padding: 6px 2px;
+  border-bottom: 0.5px solid #eeeeee;
+  color: #111111;
+  white-space: nowrap;
+}
+
+.dart-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 차트 placeholder: 모노톤 라인/면 */
+.chart-placeholder {
+  height: 170px;
+  border: 0.5px solid #eeeeee;
+  background: #ffffff;
+  position: relative;
+}
+
+.chart-placeholder::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 55%;
+  height: 0.5px;
+  background: #e8e8e8;
+}
+
+.chart-placeholder::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 28px;
+  height: 0.5px;
+  background: #e8e8e8;
+}
+
+.chart-placeholder__label {
+  position: absolute;
+  left: 14px;
+  bottom: 8px;
+  font-size: 11px;
+  color: #777777;
+}
+
+/* 재무카드 강화 요소 */
+.financial-chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mono-chart {
+  border: 0.5px solid #eeeeee;
+  padding: 8px 10px;
+  margin-bottom: 0;
+}
+
+.mono-chart__title {
+  font-size: 12px;
+  color: #666666;
+}
+
+.mono-chart__legend {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #777777;
+}
+
+.mono-chart__canvas {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  align-items: end;
+  min-height: 140px;
+}
+
+.mono-chart__group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mono-chart__bars {
+  height: 120px;
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 5px;
+}
+
+.mono-chart__bar {
+  width: 12px;
+  min-height: 4px;
+  background: #000000;
+}
+
+.mono-chart__bar--mcap {
+  background: #000000;
+}
+
+.mono-chart__bar--rev {
+  background: #666666;
+}
+
+.mono-chart__bar--fcf {
+  background: #9a9a9a;
+}
+
+.mono-chart__bar--negative {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #9a9a9a 0,
+      #9a9a9a 3px,
+      #ffffff 3px,
+      #ffffff 6px
+    );
+}
+
+.mono-chart__bar--progress {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #cccccc 0,
+      #cccccc 4px,
+      #ffffff 4px,
+      #ffffff 8px
+    );
+  border: 0.5px solid #bdbdbd;
+}
+
+.mono-chart__bar--consensus {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #9e9e9e 0,
+      #9e9e9e 2px,
+      #ffffff 2px,
+      #ffffff 5px
+    );
+  border: 0.5px solid #9a9a9a;
+}
+
+.mono-chart__year {
+  font-size: 11px;
+  color: #666666;
+}
+
+.mono-chart__year--consensus {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.mono-chart__year--provisional {
+  color: #7a7a7a;
+}
+
+.mono-chart__value {
+  font-size: 11px;
+  color: #444444;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: nowrap;
+}
+
+.price-line {
+  border: 0.5px solid #eeeeee;
+  padding: 8px 10px;
+  margin-bottom: 0;
+}
+
+.price-line__title {
+  font-size: 12px;
+  color: #666666;
+  margin-bottom: 8px;
+}
+
+.price-line__svg {
+  width: 100%;
+  height: 280px;
+  display: block;
+}
+
+.price-line__host {
+  width: 100%;
+  height: 320px;
+}
+
+.price-line__meta {
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #777777;
+  gap: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.price-line--empty {
+  font-size: 12px;
+  color: #777777;
+}
+
+.inline-dividend-panel {
+  border: 0.5px solid #eeeeee;
+  padding: 8px 10px;
+  background: #ffffff;
+}
+
+.inline-dividend-panel__title {
+  font-size: 12px;
+  color: #666666;
+  margin-bottom: 8px;
+}
+
+.inline-dividend-panel__note {
+  font-size: 11px;
+  color: #8a8a8a;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.inline-dividend-panel .dart-table {
+  font-size: 11px;
+}
+
+.inline-dividend-panel .dart-table thead th,
+.inline-dividend-panel .dart-table tbody td {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.inline-dividend-panel--empty {
+  font-size: 12px;
+  color: #777777;
+}
+
+.consensus-panel {
+  margin-top: 12px;
+  border: 0.5px solid #eeeeee;
+  background: #ffffff;
+  padding: 8px 10px;
+}
+
+.consensus-panel__title {
+  font-size: 12px;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.consensus-panel__meta {
+  font-size: 11px;
+  color: #777777;
+  margin-bottom: 8px;
+}
+
+.consensus-panel__alert {
+  font-size: 11px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  border: 0.5px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.consensus-panel__alert--warn {
+  color: #666666;
+}
+
+.consensus-panel__alert--error {
+  color: #222222;
+  border-color: #d0d0d0;
+  background: #f3f3f3;
+}
+
+.consensus-delta-up {
+  color: #cc0000 !important;
+  font-weight: 700 !important;
+  margin-left: 2px;
+}
+
+.consensus-delta-down {
+  color: #0033cc !important;
+  font-weight: 700 !important;
+  margin-left: 2px;
+}
+
+.consensus-panel .dart-table {
+  font-size: 11px;
+}
+
+.consensus-panel--empty {
+  font-size: 12px;
+  color: #777777;
+}
+
+.financial-table-wrapper {
+  margin-top: 14px;
+}
+
+.financial-table-pivot {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.financial-table-pivot .dart-table {
+  min-width: 980px;
+}
+
+.financial-table-pivot .dart-table th:first-child,
+.financial-table-pivot .dart-table td:first-child {
+  position: sticky;
+  left: 0;
+  background: #ffffff;
+  z-index: 1;
+}
+
+.financial-table-pivot .dart-table thead th:first-child {
+  z-index: 2;
+  background: #e2e2e2;
+}
+
+.financial-table-pivot .dart-table thead th {
+  background: #ececec;
+  color: #111111;
+  font-weight: 700;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.financial-table-pivot .dart-table thead th:not(:first-child) {
+  background: #e2e2e2;
+}
+
+.financial-table-pivot .dart-table tbody tr.financial-metric-highlight td {
+  background: #fff1bf;
+  font-weight: 700;
+}
+
+.invest-guide {
+  margin-top: 12px;
+  border: 0.5px solid #eeeeee;
+  background: #ffffff;
+  padding: 10px;
+}
+
+.invest-guide__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.invest-guide__title::-webkit-details-marker {
+  display: none;
+}
+
+.invest-guide__title::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 6px;
+  color: #666666;
+}
+
+.invest-guide[open] .invest-guide__title::before {
+  content: '▾';
+}
+
+.invest-guide__content {
+  margin-top: 8px;
+}
+
+.invest-guide__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.invest-guide__item {
+  border: 0.5px solid #eeeeee;
+  padding: 8px;
+  background: #ffffff;
+}
+
+.invest-guide__item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 6px;
+}
+
+.invest-guide__item-body p {
+  margin: 0 0 5px 0;
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.45;
+}
+
+.invest-guide__item-body p:last-child {
+  margin-bottom: 0;
+}
+
+.invest-guide__takeaway {
+  margin-top: 8px;
+  border: 0.5px solid #eeeeee;
+  background: #ffffff;
+  padding: 8px;
+}
+
+.invest-guide__takeaway-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 6px;
+}
+
+.invest-guide__takeaway-body {
+  margin: 0;
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* ── 기업개황 반응형 키-값 목록 ──────────────────────────────── */
+.overview-kv {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.overview-kv__item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 8px;
+  border-bottom: 0.5px solid #eeeeee;
+  min-width: 0;
+}
+
+.overview-kv__item dt {
+  flex-shrink: 0;
+  width: 56px;
+  color: #888888;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.overview-kv__item dd {
+  margin: 0;
+  font-size: 12px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+/* 주소·홈페이지처럼 긴 값은 전체 너비 사용 */
+.overview-kv__item--full {
+  grid-column: 1 / -1;
+}
+
+/* ── 최대주주 현황 ────────────────────────────────────────────────── */
+.shareholders-section {
+  padding: 4px 0 2px;
+}
+
+.shareholders-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.shareholders-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shareholders-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shareholders-item__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.shareholders-item__name {
+  font-weight: 600;
+  color: #1a1a1a;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shareholders-item__rel {
+  font-size: 10px;
+  color: #888;
+  background: #f0f0f0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* 임원 항목 강조 — 주주 명단과 이름이 일치하는 경우 */
+.officers-item--related {
+  background: rgba(30, 100, 255, 0.10);
+  border-left: 3px solid rgba(30, 100, 255, 0.6);
+  padding-left: 6px;
+  border-radius: 3px;
+}
+
+.shareholders-item__ratio {
+  font-size: 12px;
+  font-weight: 700;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.shareholders-bar {
+  height: 5px;
+  background: #ebebeb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.shareholders-bar__fill {
+  height: 100%;
+  background: #4a90d9;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.shareholders-footer {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 6px;
+  text-align: right;
+}
+
+.shareholders-item--treasury {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 0.5px solid #eeeeee;
+}
+
+.shareholders-item--treasury .shareholders-item__name {
+  font-weight: 700;
+}
+
+.shareholders-treasury__fill {
+  background: rgba(255, 200, 0, 0.8);
+}
+
+.shareholders-divider {
+  list-style: none;
+  padding: 6px 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shareholders-divider::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color, rgba(255,255,255,0.1));
+}
+
+.shareholders-divider__label {
+  font-size: 10px;
+  color: var(--text-muted, #888);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.shareholders-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color, rgba(255,255,255,0.1));
+}
+
+.shareholders-naver__fill {
+  background: rgba(100, 180, 255, 0.6);
+}
+
+/* ── 수집 상태 플레이스홀더 ─────────────────────────────────────────── */
+.sync-status-section {
+  padding: 4px 0 2px;
+}
+
+.sync-status-section__title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted, #888);
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sync-status-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+}
+
+.sync-status-msg__icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.sync-status-msg__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sync-status-msg__label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.sync-status-msg__hint {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  line-height: 1.4;
+}
+
+/* 상태별 색상 */
+.sync-status--collecting {
+  background: rgba(100, 160, 255, 0.08);
+  border-left-color: rgba(100, 160, 255, 0.5);
+}
+.sync-status--collecting .sync-status-msg__label {
+  color: #7ab0ff;
+}
+
+.sync-status--no_data {
+  background: rgba(160, 160, 160, 0.08);
+  border-left-color: rgba(160, 160, 160, 0.35);
+}
+.sync-status--no_data .sync-status-msg__label {
+  color: var(--text-muted, #888);
+}
+
+.sync-status--error {
+  background: rgba(255, 100, 80, 0.08);
+  border-left-color: rgba(255, 100, 80, 0.5);
+}
+.sync-status--error .sync-status-msg__label {
+  color: #ff7060;
+}
+
+.sync-status--never_synced {
+  background: rgba(160, 160, 160, 0.06);
+  border-left-color: rgba(160, 160, 160, 0.25);
+}
+.sync-status--never_synced .sync-status-msg__label {
+  color: var(--text-muted, #888);
+}
+
+/* ── 갱신 중 배지 (데이터 있는 상태에서 재수집 진행 시) ──────────── */
+.section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.officers-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.sync-refreshing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: rgba(100, 160, 255, 0.12);
+  border: 1px solid rgba(100, 160, 255, 0.35);
+  font-size: 0.72rem;
+  color: #7ab0ff;
+  white-space: nowrap;
+  animation: refreshing-pulse 1.6s ease-in-out infinite;
+}
+
+.sync-refreshing-badge__icon {
+  font-size: 0.75rem;
+}
+
+.sync-refreshing-badge__label {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+@keyframes refreshing-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── 등기임원 현황 ────────────────────────────────────────────────── */
+.officers-section {
+  padding: 4px 0 2px;
+}
+
+.officers-section summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.officers-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.officers-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.officers-title::before {
+  content: '▸';
+  font-size: 10px;
+  display: inline-block;
+  transition: transform 0.15s;
+}
+
+.officers-section[open] > .officers-title::before {
+  content: '▾';
+}
+
+.officers-content {
+  margin-top: 6px;
+}
+
+.officers-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.officers-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.officers-item__name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.officers-item__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.officers-item__pos {
+  font-size: 11px;
+  color: #555;
+  background: #f0f0f0;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.officers-item__job {
+  font-size: 11px;
+  color: #888;
+  padding-left: 2px;
+}
+
+.officers-item__career {
+  font-size: 11px;
+  color: #777;
+  padding-left: 2px;
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.career-edu-highlight {
+  background-color: rgba(255, 220, 0, 0.35);
+  border-radius: 2px;
+  padding: 0 2px;
+  color: inherit;
+  font-style: normal;
+}
+
+.officers-item__badge {
+  font-size: 10px;
+  color: #fff;
+  background: #555;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.officers-item__badge--sub {
+  background: #888;
+}
+
+.officers-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.officers-item__meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  background: #f5f5f5;
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.officers-item__meta-label {
+  color: #999;
+}
+
+.officers-item__meta-value {
+  color: #444;
+  font-weight: 500;
+}
+
+.overview-summary {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.5;
+}
+
+.overview-divider {
+  border: 0;
+  border-top: 0.5px solid #eeeeee;
+  margin: 8px 0;
+}
+
+.dart-table__row--latest td {
+  background: #f5f5f5;
+  font-weight: 700;
+}
+
+.dart-table__row--latest td:first-child {
+  border-left: 2px solid #000000;
+  padding-left: 6px;
+}
+
+.dart-table__row--summary td {
+  border-top: 0.5px solid #eeeeee;
+  color: #666666;
+}
+
+.financial-table-responsive .dart-table tbody td:nth-child(5),
+.financial-table-responsive .dart-table tbody td:nth-child(6) {
+  color: #666666;
+  font-size: 10px;
+}
+
+.dart-table tbody td.td-intensity-high {
+  color: #000000;
+  font-weight: 700;
+}
+
+.dart-table tbody td.td-intensity-low {
+  color: #666666;
+}
+
+.financial-table-mobile,
+.financial-table-mobile-small {
+  display: none;
+}
+
+.financial-table-desktop,
+.financial-table-mobile,
+.financial-table-mobile-small {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.financial-table-responsive .dart-table {
+  min-width: 1320px;
+}
+
+.financial-table-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.financial-table-tab {
+  border: 0.5px solid #eeeeee;
+  background: #ffffff;
+  color: #666666;
+  font-size: 10px;
+  padding: 3px 6px;
+  cursor: pointer;
+}
+
+.financial-table-tab--active {
+  border-color: #000000;
+  color: #000000;
+}
+
+.financial-table-tabpanel {
+  display: none;
+}
+
+.financial-table-tabpanel--active {
+  display: block;
+}
+
+@media (max-width: 1679px) {
+  .financial-table-desktop {
+    display: none;
+  }
+  .financial-table-mobile {
+    display: block;
+  }
+  .financial-table-mobile .dart-table {
+    min-width: 980px;
+  }
+  .financial-table-tab {
+    font-size: 9px;
+    padding: 3px 5px;
+  }
+}
+
+@media (max-width: 1299px) {
+  .mono-chart__value-mcap,
+  .mono-chart__value-sep {
+    display: none;
+  }
+}
+
+@media (max-width: 1099px) {
+  .financial-table-mobile {
+    display: none;
+  }
+  .financial-table-mobile-small {
+    display: block;
+  }
+  .financial-table-mobile-small .dart-table {
+    min-width: 760px;
+  }
+  .financial-chart-row {
+    grid-template-columns: 1fr;
+  }
+  .overview-kv {
+    grid-template-columns: 1fr;
+  }
+  .overview-kv__item--full {
+    grid-column: 1;
+  }
+  .inline-dividend-panel .dart-table thead th:nth-child(3),
+  .inline-dividend-panel .dart-table tbody td:nth-child(3),
+  .inline-dividend-panel .dart-table thead th:nth-child(6),
+  .inline-dividend-panel .dart-table tbody td:nth-child(6) {
+    display: none;
+  }
+  .price-line__host {
+    height: 240px;
+  }
+  .price-line__meta {
+    display: block;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 1519px) {
+  .price-line__host {
+    height: 280px;
+  }
+  .price-line__meta {
+    font-size: 10px;
+  }
+  .invest-guide__grid {
+    grid-template-columns: 1fr;
+  }
 }
 

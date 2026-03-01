@@ -2,6 +2,7 @@ window.DartState = (function () {
   let selectedCorp = null;
   let activeTab = 'overview'; // overview | financials | dividends
   let lastUpdatedAt = null;
+  let marketSyncing = false;
 
   const listeners = new Set();
 
@@ -23,8 +24,15 @@ window.DartState = (function () {
     }
   }
 
+  function setMarketSyncing(value) {
+    const next = !!value;
+    if (marketSyncing === next) return;
+    marketSyncing = next;
+    notify();
+  }
+
   function getState() {
-    return { selectedCorp, activeTab, lastUpdatedAt };
+    return { selectedCorp, activeTab, lastUpdatedAt, marketSyncing };
   }
 
   function subscribe(fn) {
@@ -42,6 +50,7 @@ window.DartState = (function () {
     setSelectedCorp,
     setActiveTab,
     setLastUpdatedAt,
+    setMarketSyncing,
     subscribe,
   };
 })();

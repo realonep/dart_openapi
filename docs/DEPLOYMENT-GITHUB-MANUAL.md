@@ -1,6 +1,6 @@
 # GitHub 수동 배포/동기화 가이드
 
-이 문서는 `html_dart` 프로젝트를 로컬에서 GitHub로 반영하고, GitHub Actions 수동 실행(`DART On-Demand Bootstrap (Manual)`)으로 온디맨드 운영에 필요한 초기 검색 목록을 갱신하는 표준 절차를 설명합니다.
+이 문서는 `html_dart` 프로젝트를 로컬에서 GitHub로 반영하고, GitHub Actions 수동 실행(`DART DB Sync (Manual)`)으로 최종 동작 확인까지 진행하는 표준 절차를 설명합니다.
 
 ## 0) 사전 조건
 
@@ -8,6 +8,9 @@
 - GitHub 저장소 접근 권한 보유
 - GitHub Actions 시크릿 등록 완료:
   - `OPENDART_API_KEY`
+  - `DATABASE_URL`
+  - `DATABASE_AUTH_TOKEN`
+  - (선택) `OPENAI_API_KEY`
 
 ## 1) 작업 디렉터리 이동
 
@@ -136,25 +139,36 @@ git push -u origin <브랜치명>
 
 권장값:
 
-- (선택) `WRITE_CORP_MASTER=true`
-  - 기본값은 `false` 권장
-  - `true`일 때 `corp-code-list.json` 생성 후 `corp_master` DB 적재를 시도합니다.
+- `ENABLE_FETCH_ALL_SYNC=true` (실행 시)
+- `DATA_BACKEND=db`
+- `DB_ONLY=1`
+- `SYNC_CORP_CONCURRENCY=2`
+- `DB_BUSY_RETRY_ATTEMPTS=4`
+- `SQLITE_BUSY_TIMEOUT_MS=5000`
+- `FETCH_ONE_WATCHDOG_MS=900000`
+- `ENABLE_TRACE_LOGS=false`
+- `MARKET_CACHE_TTL_HOURS=2`
+- `MARKET_CACHE_USE_SESSION_TTL=true`
+- `MARKET_CACHE_TTL_MARKET_HOURS=1`
+- `MARKET_CACHE_TTL_OFF_HOURS=6`
 
 ## 10) GitHub Actions 수동 실행
 
 1. `Actions` 탭 이동
-2. `DART On-Demand Bootstrap (Manual)` 선택
+2. `DART DB Sync (Manual)` 선택
 3. `Run workflow` 클릭
 4. 입력값:
-   - `write_corp_master=false` (기본 권장)
+   - `run_sync=true`
    - 실행 브랜치 선택
 
 ## 11) Actions 로그 성공 기준
 
 아래 단계가 모두 성공(초록)이어야 합니다.
 
-- `Validate required secret`
-- `Refresh corp code list for on-demand search`
+- `Resolve run flag` (`run_sync=true`)
+- `Validate required secrets`
+- `Sync Open DART data to DB`
+- `Migrate and sync to remote DB`
 
 ## 12) 최종 동작 확인
 
@@ -168,11 +182,14 @@ git push -u origin <브랜치명>
 
 ## 13) 작업 종료 후 안전 복귀
 
-추가 복구 작업은 없습니다. (`write_corp_master`를 `false`로 유지하면 안전 모드입니다.)
+운영 안전을 위해 Variables에서 아래 값을 복구:
+
+- `ENABLE_FETCH_ALL_SYNC=false`
 
 ## 14) 실패 시 점검 포인트
 
-- `Validate required secret` 실패: `OPENDART_API_KEY` 누락/오타
-- `Refresh corp code list for on-demand search` 실패: DART 키/호출 제한/네트워크
-- 목록 갱신 후 검색 반영 지연: 브라우저 새로고침 후 `data/meta/corp-code-list.json` 최신 여부 확인
+- `Validate required secrets` 실패: 시크릿 이름/값 오타
+- `fetch:all` 실패: DART 키/호출 제한/네트워크
+- `db:sync-remote` 실패: Turso URL/토큰 권한
+- UI 반영 지연: 폴링 상태 및 서버 로그(`logs/fetch-one/*.log`) 확인
 

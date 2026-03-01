@@ -1,0 +1,30 @@
+{
+  "corp_code": "00148610",
+  "stock_code": "003530",
+  "source": "naver",
+  "unit": "억원",
+  "items": [
+    {
+      "year_label": "2026E",
+      "is_estimate": true,
+      "revenue": null,
+      "op_income": null,
+      "net_income": null,
+      "roe": null
+    },
+    {
+      "year_label": "2027E",
+      "is_estimate": true,
+      "revenue": null,
+      "op_income": null,
+      "net_income": null,
+      "roe": null
+    }
+  ],
+  "source_url": "https://navercomp.wisereport.co.kr/v2/company/c1050001.aspx?cmp_cd=003530&cn=",
+  "fetch_policy": {
+    "ttl_hours": 12
+  },
+  "last_updated_at": "2026-03-01",
+  "fetched_at": "2026-03-01T12:20:42.811Z"
+}

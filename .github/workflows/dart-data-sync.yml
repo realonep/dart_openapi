@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       write_corp_master:
-        description: "Also try writing corp_master table? (optional)"
+        description: "Also write corp_master table? (optional)"
         required: false
         default: "false"
 

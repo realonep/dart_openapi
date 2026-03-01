@@ -4,7 +4,7 @@ window.DartChart = (function () {
 
   function placeholderChart(message) {
     const root = el('div', { className: 'chart-placeholder' });
-    root.textContent = message || '차트는 추후 구현 예정입니다.';
+    root.appendChild(el('div', { className: 'chart-placeholder__label', text: message || '차트는 추후 구현 예정입니다.' }));
     return root;
   }
 

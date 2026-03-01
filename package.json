@@ -4,23 +4,23 @@
   "private": true,
   "description": "Open DART API를 활용한 상장사 재무/배당 데이터 GitHub Pages 대시보드",
   "scripts": {
+    "serve": "node scripts/server.js",
     "fetch:corp-code-list": "node scripts/fetch-corp-code-list.js",
     "fetch:corp-code-list:daily": "node scripts/ensure-corp-list-daily.js",
-    "fetch:corp-index": "node scripts/fetch-corp-index.js",
-    "fetch:overview": "node scripts/fetch-corp-overview.js",
-    "fetch:financials": "node scripts/fetch-financials.js",
-    "fetch:dividends": "node scripts/fetch-dividends.js",
-    "fetch:all": "npm run fetch:corp-index && npm run fetch:overview && npm run fetch:financials && npm run fetch:dividends",
+    "fetch:all": "node scripts/sync-all.js",
     "db:migrate": "node scripts/migrate-json-to-db.js",
     "db:sync-remote": "node scripts/db/sync-to-remote.js",
-    "db:seed-targets": "node scripts/db/seed-targets.js"
+    "db:sync-market": "node scripts/db/sync-market-to-db.js",
+    "db:refresh-partial-market": "node scripts/db/refresh-partial-market-cache.js",
+    "db:seed-targets": "node scripts/db/seed-targets.js",
+    "db:clear-corp-master": "node scripts/db/clear-corp-master.js",
+    "db:verify": "node scripts/verify-db-vs-json.js",
+    "db:update-golden": "node scripts/verify-db-vs-json.js --update-golden"
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
     "adm-zip": "^0.5.16",
     "cheerio": "^1.2.0",
     "dotenv": "^17.3.1"
-  },
-  "devDependencies": {}
+  }
 }
-
