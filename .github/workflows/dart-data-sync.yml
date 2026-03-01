@@ -1,18 +1,33 @@
-name: Open DART Data Sync
+name: DART DB Sync (Manual)
 
 on:
-  push:
-    branches: [ "master" ]  # 이 두 줄을 추가하여 master에 파일이 올라가면 실행되게 함
-  schedule:
-    - cron: '0 16 * * *' # 매일 KST 01:00 (UTC 16:00)
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      run_sync:
+        description: "Run full fetch+db sync now?"
+        required: false
+        default: "false"
 
 jobs:
   sync-data:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
+    env:
+      # 기본은 안전모드(false). 실행하려면 workflow_dispatch 입력(run_sync=true) 또는 Variable로 true 지정.
+      ENABLE_FETCH_ALL_SYNC: ${{ vars.ENABLE_FETCH_ALL_SYNC || 'false' }}
+      DATA_BACKEND: ${{ vars.DATA_BACKEND || 'db' }}
+      DB_ONLY: ${{ vars.DB_ONLY || '1' }}
+      SYNC_CORP_CONCURRENCY: ${{ vars.SYNC_CORP_CONCURRENCY || '2' }}
+      DB_BUSY_RETRY_ATTEMPTS: ${{ vars.DB_BUSY_RETRY_ATTEMPTS || '4' }}
+      SQLITE_BUSY_TIMEOUT_MS: ${{ vars.SQLITE_BUSY_TIMEOUT_MS || '5000' }}
+      FETCH_ONE_WATCHDOG_MS: ${{ vars.FETCH_ONE_WATCHDOG_MS || '900000' }}
+      ENABLE_TRACE_LOGS: ${{ vars.ENABLE_TRACE_LOGS || 'false' }}
+      MARKET_CACHE_TTL_HOURS: ${{ vars.MARKET_CACHE_TTL_HOURS || '2' }}
+      MARKET_CACHE_USE_SESSION_TTL: ${{ vars.MARKET_CACHE_USE_SESSION_TTL || 'true' }}
+      MARKET_CACHE_TTL_MARKET_HOURS: ${{ vars.MARKET_CACHE_TTL_MARKET_HOURS || '1' }}
+      MARKET_CACHE_TTL_OFF_HOURS: ${{ vars.MARKET_CACHE_TTL_OFF_HOURS || '6' }}
+      OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -21,40 +36,40 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Fetch corp index (optional placeholder)
-        run: node scripts/fetch-corp-index.js
-        env:
-          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
-
-      - name: Fetch company overview
-        run: node scripts/fetch-corp-overview.js
-        env:
-          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
-
-      - name: Fetch financials
-        run: node scripts/fetch-financials.js
-        env:
-          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
-
-      - name: Fetch dividends
-        run: node scripts/fetch-dividends.js
-        env:
-          OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
-
-      - name: Commit and push changes
+      - name: Resolve run flag
+        id: runflag
+        shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data
-          if git diff --cached --quiet; then
-            echo "No data changes to commit."
+          if [ "${{ github.event.inputs.run_sync }}" = "true" ] || [ "${ENABLE_FETCH_ALL_SYNC}" = "true" ]; then
+            echo "run_sync=true" >> "$GITHUB_OUTPUT"
           else
-            git commit -m "chore: sync Open DART data"
-            git push
+            echo "run_sync=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Validate required secrets
+        if: steps.runflag.outputs.run_sync == 'true'
+        shell: bash
+        run: |
+          test -n "$OPENDART_API_KEY" || { echo "OPENDART_API_KEY is required"; exit 1; }
+          test -n "$DATABASE_URL" || { echo "DATABASE_URL is required"; exit 1; }
+          test -n "$DATABASE_AUTH_TOKEN" || { echo "DATABASE_AUTH_TOKEN is required"; exit 1; }
+
+      - name: Sync Open DART data to DB
+        if: steps.runflag.outputs.run_sync == 'true'
+        run: npm run fetch:all
+
+      - name: Migrate and sync to remote DB
+        if: steps.runflag.outputs.run_sync == 'true'
+        run: |
+          npm run db:migrate
+          npm run db:sync-remote
+
+      - name: Skip sync in safe mode
+        if: steps.runflag.outputs.run_sync != 'true'
+        run: echo "Safe mode: run_sync=false, sync steps skipped."
 
