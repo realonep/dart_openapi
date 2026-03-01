@@ -13,6 +13,12 @@
     "db:sync-remote": "node scripts/db/sync-to-remote.js",
     "db:seed-targets": "node scripts/db/seed-targets.js"
   },
+  "dependencies": {
+    "@libsql/client": "^0.17.0",
+    "adm-zip": "^0.5.16",
+    "cheerio": "^1.2.0",
+    "dotenv": "^17.3.1"
+  },
   "devDependencies": {}
 }
 
