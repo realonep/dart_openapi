@@ -1,0 +1,30 @@
+{
+  "corp_code": "00159023",
+  "stock_code": "017670",
+  "source": "naver",
+  "unit": "억원",
+  "items": [
+    {
+      "year_label": "2026E",
+      "is_estimate": true,
+      "revenue": 177258.7,
+      "op_income": 18418.2,
+      "net_income": 12167.1,
+      "roe": 10.26
+    },
+    {
+      "year_label": "2027E",
+      "is_estimate": true,
+      "revenue": 180850.1,
+      "op_income": 19601.1,
+      "net_income": 12997.5,
+      "roe": 10.39
+    }
+  ],
+  "source_url": "https://navercomp.wisereport.co.kr/v2/company/c1050001.aspx?cmp_cd=017670&cn=",
+  "fetch_policy": {
+    "ttl_hours": 12
+  },
+  "last_updated_at": "2026-03-01",
+  "fetched_at": "2026-03-01T06:50:03.489Z"
+}

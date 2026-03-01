@@ -1,0 +1,30 @@
+{
+  "corp_code": "01160363",
+  "stock_code": "247540",
+  "source": "naver",
+  "unit": "억원",
+  "items": [
+    {
+      "year_label": "2026E",
+      "is_estimate": true,
+      "revenue": 29439,
+      "op_income": 887.2,
+      "net_income": 230.5,
+      "roe": 1.36
+    },
+    {
+      "year_label": "2027E",
+      "is_estimate": true,
+      "revenue": 41115.7,
+      "op_income": 2277.1,
+      "net_income": 1118.4,
+      "roe": 6.36
+    }
+  ],
+  "source_url": "https://navercomp.wisereport.co.kr/v2/company/c1050001.aspx?cmp_cd=247540&cn=",
+  "fetch_policy": {
+    "ttl_hours": 12
+  },
+  "last_updated_at": "2026-03-01",
+  "fetched_at": "2026-03-01T04:19:26.565Z"
+}

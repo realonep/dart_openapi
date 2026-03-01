@@ -1,0 +1,30 @@
+{
+  "corp_code": "00117212",
+  "stock_code": "000150",
+  "source": "naver",
+  "unit": "억원",
+  "items": [
+    {
+      "year_label": "2026E",
+      "is_estimate": true,
+      "revenue": 213592.2,
+      "op_income": 16937.9,
+      "net_income": 4683.1,
+      "roe": 22.73
+    },
+    {
+      "year_label": "2027E",
+      "is_estimate": true,
+      "revenue": 238145,
+      "op_income": 24246.5,
+      "net_income": 8474.8,
+      "roe": 32.39
+    }
+  ],
+  "source_url": "https://navercomp.wisereport.co.kr/v2/company/c1050001.aspx?cmp_cd=000150&cn=",
+  "fetch_policy": {
+    "ttl_hours": 12
+  },
+  "last_updated_at": "2026-03-01",
+  "fetched_at": "2026-03-01T04:22:11.845Z"
+}

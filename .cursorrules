@@ -1,0 +1,10 @@
+# 프로젝트 규칙
+
+## 데이터 스키마 문서 동기화
+- `data/corp/{corp_code}/` 아래의 JSON 파일(overview.json, financials.json, dividends.json, guidance.json 등)의 **구조를 변경하거나**, **새 JSON 파일을 추가할 때**는 반드시 **data/DATA-FIELDS.md** 문서를 함께 수정한다.
+- 필드 추가·삭제·이름 변경, 새 루트 키, 새 파일이 생기면 DATA-FIELDS.md에 해당 섹션을 추가하거나 기존 표를 갱신한다.
+
+## 파이프라인 규칙 우선 참조
+- 데이터 수집/파싱 로직을 변경할 때는 먼저 `docs/PIPELINE-RULES.md`를 참조한다.
+- 비정형 파이프라인 관련 변경(공시 페이지 수집, 조기 종료, 컷오프, dedupe)은 문서 규칙과 코드를 함께 갱신한다.
+- 문서와 코드가 불일치하면 문서를 최신 동작 기준으로 즉시 업데이트한다.

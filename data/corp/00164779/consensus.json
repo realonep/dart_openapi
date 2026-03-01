@@ -1,0 +1,30 @@
+{
+  "corp_code": "00164779",
+  "stock_code": "000660",
+  "source": "naver",
+  "unit": "억원",
+  "items": [
+    {
+      "year_label": "2026E",
+      "is_estimate": true,
+      "revenue": 2252711.6,
+      "op_income": 1561228.8,
+      "net_income": 1252454.6,
+      "roe": 71.3
+    },
+    {
+      "year_label": "2027E",
+      "is_estimate": true,
+      "revenue": 2587460,
+      "op_income": 1729324.8,
+      "net_income": 1390653.7,
+      "roe": 44.91
+    }
+  ],
+  "source_url": "https://navercomp.wisereport.co.kr/v2/company/c1050001.aspx?cmp_cd=000660&cn=",
+  "fetch_policy": {
+    "ttl_hours": 12
+  },
+  "last_updated_at": "2026-02-28",
+  "fetched_at": "2026-02-28T10:20:39.873Z"
+}

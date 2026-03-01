@@ -1,0 +1,30 @@
+{
+  "corp_code": "00164742",
+  "stock_code": "005380",
+  "source": "naver",
+  "unit": "억원",
+  "items": [
+    {
+      "year_label": "2026E",
+      "is_estimate": true,
+      "revenue": 1936719.5,
+      "op_income": 129051.6,
+      "net_income": 111327.1,
+      "roe": 9.26
+    },
+    {
+      "year_label": "2027E",
+      "is_estimate": true,
+      "revenue": 2018078.2,
+      "op_income": 140363.1,
+      "net_income": 120449.2,
+      "roe": 9.35
+    }
+  ],
+  "source_url": "https://navercomp.wisereport.co.kr/v2/company/c1050001.aspx?cmp_cd=005380&cn=",
+  "fetch_policy": {
+    "ttl_hours": 12
+  },
+  "last_updated_at": "2026-03-01",
+  "fetched_at": "2026-03-01T04:45:15.432Z"
+}

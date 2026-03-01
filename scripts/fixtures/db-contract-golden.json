@@ -1,0 +1,42 @@
+{
+  "saved_at": "2026-02-28T02:39:48.305Z",
+  "index": {
+    "count": 1,
+    "corp_codes": [
+      "00126380"
+    ]
+  },
+  "corp_codes": [
+    "00126380"
+  ],
+  "details": {
+    "00126380": {
+      "exists": true,
+      "overview_corp_code": "00126380",
+      "overview_stock_code": "005930",
+      "financial_years": [
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "financial_latest_year": 2025,
+      "dividend_years": [
+        2022,
+        2023,
+        2024
+      ],
+      "guidance_rcept_no": [
+        "20260129800008"
+      ],
+      "treasury_rcept_no": [
+        "20250218800029"
+      ],
+      "financial_count": 5,
+      "dividend_count": 3,
+      "guidance_count": 1,
+      "treasury_count": 1
+    }
+  }
+}

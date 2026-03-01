@@ -1,0 +1,30 @@
+{
+  "corp_code": "00776820",
+  "stock_code": "111770",
+  "source": "naver",
+  "unit": "억원",
+  "items": [
+    {
+      "year_label": "2026E",
+      "is_estimate": true,
+      "revenue": 42885.9,
+      "op_income": 5910.1,
+      "net_income": 5390.2,
+      "roe": 12.45
+    },
+    {
+      "year_label": "2027E",
+      "is_estimate": true,
+      "revenue": 44707.2,
+      "op_income": 6699.2,
+      "net_income": 5828.2,
+      "roe": 12.04
+    }
+  ],
+  "source_url": "https://navercomp.wisereport.co.kr/v2/company/c1050001.aspx?cmp_cd=111770&cn=",
+  "fetch_policy": {
+    "ttl_hours": 12
+  },
+  "last_updated_at": "2026-02-28",
+  "fetched_at": "2026-02-28T10:54:37.362Z"
+}

@@ -1,0 +1,13 @@
+---
+description: 데이터 파이프라인 구현/수정 규칙
+alwaysApply: true
+---
+
+# Pipeline Implementation Rule
+
+이 프로젝트에서 데이터 수집/가공 코드를 수정할 때는 아래 규칙을 우선 적용합니다.
+
+- `docs/PIPELINE-RULES.md`를 단일 기준 문서로 참조한다.
+- 파이프라인 규칙 변경 시, 코드와 `docs/PIPELINE-RULES.md`를 함께 수정한다.
+- 데이터 산출 구조 변경 시 `data/DATA-FIELDS.md`도 함께 갱신한다.
+- 비정형 파이프라인 추가 시 기존 조기 종료/중복 제거 메커니즘(`fetchDisclosureBuckets`)을 계승한다.
