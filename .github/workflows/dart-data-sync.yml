@@ -71,5 +71,6 @@ jobs:
 
       - name: Skip sync in safe mode
         if: steps.runflag.outputs.run_sync != 'true'
-        run: echo "Safe mode: run_sync=false, sync steps skipped."
+        run: |
+          echo "Safe mode: run_sync=false, sync steps skipped."
 
