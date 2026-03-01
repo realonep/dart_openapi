@@ -4,6 +4,8 @@
   "private": true,
   "description": "Open DART API를 활용한 상장사 재무/배당 데이터 GitHub Pages 대시보드",
   "scripts": {
+    "fetch:corp-code-list": "node scripts/fetch-corp-code-list.js",
+    "fetch:corp-code-list:daily": "node scripts/ensure-corp-list-daily.js",
     "fetch:corp-index": "node scripts/fetch-corp-index.js",
     "fetch:overview": "node scripts/fetch-corp-overview.js",
     "fetch:financials": "node scripts/fetch-financials.js",

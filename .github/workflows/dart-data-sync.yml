@@ -1,33 +1,19 @@
-name: DART DB Sync (Manual)
+name: DART On-Demand Bootstrap (Manual)
 
 on:
   workflow_dispatch:
     inputs:
-      run_sync:
-        description: "Run full fetch+db sync now?"
+      write_corp_master:
+        description: "Also try writing corp_master table? (optional)"
         required: false
         default: "false"
 
 jobs:
-  sync-data:
+  bootstrap-corp-list:
     runs-on: ubuntu-latest
     env:
-      # 기본은 안전모드(false). 실행하려면 workflow_dispatch 입력(run_sync=true) 또는 Variable로 true 지정.
-      ENABLE_FETCH_ALL_SYNC: ${{ vars.ENABLE_FETCH_ALL_SYNC || 'false' }}
-      DATA_BACKEND: ${{ vars.DATA_BACKEND || 'db' }}
-      DB_ONLY: ${{ vars.DB_ONLY || '1' }}
-      SYNC_CORP_CONCURRENCY: ${{ vars.SYNC_CORP_CONCURRENCY || '2' }}
-      DB_BUSY_RETRY_ATTEMPTS: ${{ vars.DB_BUSY_RETRY_ATTEMPTS || '4' }}
-      SQLITE_BUSY_TIMEOUT_MS: ${{ vars.SQLITE_BUSY_TIMEOUT_MS || '5000' }}
-      FETCH_ONE_WATCHDOG_MS: ${{ vars.FETCH_ONE_WATCHDOG_MS || '900000' }}
-      ENABLE_TRACE_LOGS: ${{ vars.ENABLE_TRACE_LOGS || 'false' }}
-      MARKET_CACHE_TTL_HOURS: ${{ vars.MARKET_CACHE_TTL_HOURS || '2' }}
-      MARKET_CACHE_USE_SESSION_TTL: ${{ vars.MARKET_CACHE_USE_SESSION_TTL || 'true' }}
-      MARKET_CACHE_TTL_MARKET_HOURS: ${{ vars.MARKET_CACHE_TTL_MARKET_HOURS || '1' }}
-      MARKET_CACHE_TTL_OFF_HOURS: ${{ vars.MARKET_CACHE_TTL_OFF_HOURS || '6' }}
       OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+      WRITE_CORP_MASTER: ${{ github.event.inputs.write_corp_master || 'false' }}
 
     steps:
       - name: Checkout repository
@@ -41,36 +27,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Resolve run flag
-        id: runflag
-        shell: bash
-        run: |
-          if [ "${{ github.event.inputs.run_sync }}" = "true" ] || [ "${ENABLE_FETCH_ALL_SYNC}" = "true" ]; then
-            echo "run_sync=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run_sync=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Validate required secrets
-        if: steps.runflag.outputs.run_sync == 'true'
+      - name: Validate required secret
         shell: bash
         run: |
           test -n "$OPENDART_API_KEY" || { echo "OPENDART_API_KEY is required"; exit 1; }
-          test -n "$DATABASE_URL" || { echo "DATABASE_URL is required"; exit 1; }
-          test -n "$DATABASE_AUTH_TOKEN" || { echo "DATABASE_AUTH_TOKEN is required"; exit 1; }
 
-      - name: Sync Open DART data to DB
-        if: steps.runflag.outputs.run_sync == 'true'
-        run: npm run fetch:all
+      - name: Refresh corp code list for on-demand search
+        run: npm run fetch:corp-code-list
 
-      - name: Migrate and sync to remote DB
-        if: steps.runflag.outputs.run_sync == 'true'
+      - name: Print bootstrap summary
         run: |
-          npm run db:migrate
-          npm run db:sync-remote
-
-      - name: Skip sync in safe mode
-        if: steps.runflag.outputs.run_sync != 'true'
-        run: |
-          echo "Safe mode: run_sync=false, sync steps skipped."
+          echo "write_corp_master=${WRITE_CORP_MASTER}"
 
